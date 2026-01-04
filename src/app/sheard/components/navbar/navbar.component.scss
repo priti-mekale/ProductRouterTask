@@ -1,0 +1,18 @@
+/* normal link */
+.navbar-nav .nav-link {
+  padding: 8px 14px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+/* hover effect */
+.navbar-nav .nav-link:hover {
+  background-color: #ffd699;
+  color: #000;
+}
+
+/* active route */
+.navbar-nav .nav-item.active .nav-link {
+  background-color: orange !important;
+  color: white !important;
+}

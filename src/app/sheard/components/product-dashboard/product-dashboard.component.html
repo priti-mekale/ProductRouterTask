@@ -1,0 +1,26 @@
+<mat-card *ngIf="productInfo">
+  <mat-card-header>
+    <h2>{{ productInfo.title }}</h2>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p>{{ productInfo.description }}</p>
+    <p>{{ productInfo.price | currency:'INR' }}</p>
+    <p>{{ productInfo.category }}</p>
+  </mat-card-content>
+
+  <mat-card-actions class="d-flex justify-content-between">
+
+    <button
+      mat-icon-button
+      color="primary"
+      [routerLink]="['/product', productInfo.id]">
+      <mat-icon>edit</mat-icon>
+    </button>
+
+    <button mat-icon-button color="warn" (click)="onRemove()">
+      <mat-icon>delete</mat-icon>
+    </button>
+
+  </mat-card-actions>
+</mat-card>

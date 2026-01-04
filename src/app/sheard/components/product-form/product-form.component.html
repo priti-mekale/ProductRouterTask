@@ -1,0 +1,25 @@
+<table class="table table-bordered mt-3" *ngIf="productArr.length > 0">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Category</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let product of productArr">
+      <td>{{ product.title }}</td>
+      <td>{{ product.description }}</td>
+      <td>{{ product.price }}</td>
+      <td>{{ product.category }}</td>
+      <td>
+        <button mat-button color="accent" (click)="onEdit(product)">
+          Edit
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
