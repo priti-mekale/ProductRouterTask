@@ -48,10 +48,10 @@ export class SingleProductComponent implements OnInit {
     });
   }
 
-onEdit()
-{
+// onEdit()
+// {
   
-}
+// }
 
 onRemove() {
   const matConfig = new MatDialogConfig();
@@ -62,7 +62,7 @@ onRemove() {
 
   dialogRef.afterClosed().subscribe((result) => {
     if (result === true) {
-      // ✅ CALL STRING ID METHOD
+     
       this._ProductService.removeProduct(this.prodId).subscribe({
         next: (data) => {
           console.log('Deleted product:', data);

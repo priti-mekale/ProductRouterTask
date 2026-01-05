@@ -25,13 +25,6 @@ prodId: any;
     if (this.productArr.length > 0) {
     this.getProduct(this.productArr[0]);
   }
-//  this._router.navigate(
-//   [this.productArr[0].id],
-//   {
-//     relativeTo: this._routes,
-//     queryParams: { edit: true }
-//   }
-// );
 
   }
 
