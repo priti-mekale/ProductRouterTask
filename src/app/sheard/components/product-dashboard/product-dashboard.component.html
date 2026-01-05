@@ -1,26 +1,25 @@
-<mat-card *ngIf="productInfo">
-  <mat-card-header>
-    <h2>{{ productInfo.title }}</h2>
-  </mat-card-header>
+  <div>
+      <button  mat-raised-button routerLink="addProducts" color="primary" >Add Product</button>
+  </div>
+  <br>
+<div class="row">
+   
+  <div class="col-md-4">
+    <ul class="list-group">
+      <li
+        class="list-group-item"
+        *ngFor="let product of productArr"
+        (click)="getProduct(product)"
+      >
+        {{ product.name }} 
+        <!-- {{ product.id }} -->
+          
+      </li>
+    </ul>
+  </div>
 
-  <mat-card-content>
-    <p>{{ productInfo.description }}</p>
-    <p>{{ productInfo.price | currency:'INR' }}</p>
-    <p>{{ productInfo.category }}</p>
-  </mat-card-content>
-
-  <mat-card-actions class="d-flex justify-content-between">
-
-    <button
-      mat-icon-button
-      color="primary"
-      [routerLink]="['/product', productInfo.id]">
-      <mat-icon>edit</mat-icon>
-    </button>
-
-    <button mat-icon-button color="warn" (click)="onRemove()">
-      <mat-icon>delete</mat-icon>
-    </button>
-
-  </mat-card-actions>
-</mat-card>
+  <div class="col-md-8">
+    <!-- product details here -->
+     <router-outlet></router-outlet>
+  </div>
+</div>

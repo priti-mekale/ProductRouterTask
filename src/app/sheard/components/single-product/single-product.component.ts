@@ -12,59 +12,68 @@ import { SnackbarService } from '../../services/snackbar.service';
   templateUrl: './single-product.component.html',
   styleUrls: ['./single-product.component.scss']
 })
-export class SproductComponent implements OnInit {
- productId!:string
-  productInfo!:Iproduct
+export class SingleProductComponent implements OnInit {
+ productArr: Iproduct[] = [];
+
+  prodObj!: Iproduct;
+  prodId!: string;
+
   constructor(
-    private _router:ActivatedRoute,
-    private _productService:ProductService,
-    private _routes:Router,
-    private _matDilog:MatDialog,
-    private _snackbar:SnackbarService
-  ) { }
+    private _route: ActivatedRoute,
+    private _ProductService: ProductService,
+    private _matDialog: MatDialog   ,
+    private _router:Router
+  ) {}
 
   ngOnInit(): void {
-    this.fetchsingleProduct()
+    this.getProductDetails();
   }
 
-  fetchsingleProduct(){
-     this._router.paramMap.subscribe(param=>{
-   this.productId=param.get('productId')!;
-   console.log(this.productId)
-  this._productService.fetchProduct(+this.productId)
-     .subscribe({
-      next:res=>{
-        console.log(res)
-        this.productInfo=res
-      },
-      error:err=>{
-        console.log(err)
-      }
-     })
-   })
-  }
+  getProductDetails() {
+    this._route.paramMap.subscribe(param => {
+      const id = param.get('productId');
 
-  // onformEdit() {
-  //   this._routes.navigate(['editProduct'], { relativeTo: this._router });
-  // }
+      if (id) {
+        this.prodId = id;
 
-  onRemove(){
-   let matDilogConfig=new MatDialogConfig()
-     matDilogConfig.data='Are you sure you want to remove this Product?'
-     matDilogConfig.disableClose=true
-   let matDilogRef=  this._matDilog.open(GetConfirmComponent, matDilogConfig)
-   matDilogRef.afterClosed()
-    .subscribe({
-      next:res=>{
-        if(res){
-          if(this.productId){
-            this._productService.removeProduct(+this.productId)
-            this._routes.navigate(['product'])
-            this._snackbar.openSnackbar(`This product id ${this.productId} removed successfully.`)
+        this._ProductService.fetchProduct(this.prodId).subscribe({
+          next: (data) => {
+            this.prodObj = data;
+          },
+          error: (err) => {
+            console.error('Error fetching product:', err);
           }
-        }
+        });
       }
-    })
-
+    });
   }
+
+onEdit()
+{
+  
+}
+
+onRemove() {
+  const matConfig = new MatDialogConfig();
+  matConfig.width = '450px';
+  matConfig.data = `Are you sure you want to remove product with id ${this.prodId}?`;
+
+  const dialogRef = this._matDialog.open(GetConfirmComponent, matConfig);
+
+  dialogRef.afterClosed().subscribe((result) => {
+    if (result === true) {
+      // ✅ CALL STRING ID METHOD
+      this._ProductService.removeProduct(this.prodId).subscribe({
+        next: (data) => {
+          console.log('Deleted product:', data);
+          this._router.navigate(['/products']);
+        },
+        error: (err) => console.log(err)
+      });
+    } else {
+      console.log('Delete cancelled');
+    }
+  });
+}
+
 }

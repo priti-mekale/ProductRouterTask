@@ -1,25 +1,105 @@
-<table class="table table-bordered mt-3" *ngIf="productArr.length > 0">
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Description</th>
-      <th>Price</th>
-      <th>Category</th>
-      <th>Action</th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <tr *ngFor="let product of productArr">
-      <td>{{ product.title }}</td>
-      <td>{{ product.description }}</td>
-      <td>{{ product.price }}</td>
-      <td>{{ product.category }}</td>
-      <td>
-        <button mat-button color="accent" (click)="onEdit(product)">
-          Edit
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <div class="row">
+    <div class="col-md-6 offset-md-3 ">
+
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white text-center">
+          <h5>{{ isInEditMode ? 'Update Product' : 'Add Product' }}</h5>
+        </div>
+
+        <div class="card-body">
+          <form #productForm="ngForm" (ngSubmit)="onSubmit()">
+
+            <!-- Name -->
+            <div class="form-group mb-3">
+              <label>Product Name</label>
+              <input
+                type="text"
+                class="form-control"
+                name="name"
+                ngModel
+                required
+              />
+            </div>
+
+            <!-- Price -->
+            <div class="form-group mb-3">
+              <label>Price</label>
+              <input
+                type="number"
+                class="form-control"
+                name="price"
+                ngModel
+                required
+                min="1"
+              />
+            </div>
+
+            <!-- Category -->
+            <div class="form-group mb-3">
+              <label>Category</label>
+              <input
+                type="text"
+                class="form-control"
+                name="category"
+                ngModel
+                required
+              />
+            </div>
+
+            <!-- Description -->
+            <div class="form-group mb-3">
+              <label>Description</label>
+              <textarea
+                class="form-control"
+                name="description"
+                ngModel
+                required
+              ></textarea>
+            </div>
+
+            <!-- Image URL -->
+            <div class="form-group mb-3">
+              <label>Image URL</label>
+              <input
+                type="text"
+                class="form-control"
+                name="imageUrl"
+                ngModel
+                required
+              />
+            </div>
+
+            <!-- Buttons -->
+            <div class="text-center">
+
+              <button
+                *ngIf="!isInEditMode"
+                mat-raised-button
+                color="primary"
+                type="submit"
+                [disabled]="productForm.invalid"
+              >
+                Add Product
+              </button>
+
+              <button
+                *ngIf="isInEditMode"
+                type="button"
+                mat-raised-button
+                color="primary"
+                (click)="onUpdate()"
+                [disabled]="productForm.invalid"
+              >
+                Update Product
+              </button>
+
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
